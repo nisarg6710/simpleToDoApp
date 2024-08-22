@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script>
+    let globalId = 1; //an id is given to every todo so that whenver a mark as done button is clicked we know which one to change to done
+
+    function markAsDone(todoId) {
+      const parent = document.getElementById(todoId);
+      parent.children[2].innerHTML = "Done!"
+      /* 
+      children[0] means title of the todo
+      children[1] means description of the todo
+      children[2] means button
+      */
+    }
+
+    function createChild(title, description, id) {
+      const child = document.createElement("div");//empty div, just created (in memory)=>means that we have created an empty div but yet not pushed in the memory but we can anytimme we want...
+      const firstGrandParent = document.createElement("div");
+      //same explaination as above for all the 3 grandparents
+      firstGrandParent.innerHTML = title;
+      const secondGrandParent = document.createElement("div");
+      secondGrandParent.innerHTML = description;
+      const thirdGrandParent = document.createElement("button");
+      thirdGrandParent.innerHTML = "Mark as done";
+      thirdGrandParent.setAttribute("onclick", `markAsDone(${id})`);//yaha id assign ho ri
+      child.appendChild(firstGrandParent);
+      child.appendChild(secondGrandParent);
+      child.appendChild(thirdGrandParent)
+      child.setAttribute("id", id);
+      return child;
+    }
+    /*
+    3 grandchilds(consider grandparent as grandchild) are created and then each of them is appended to child   
+
+    */
+    function addTodo() {
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const parent = document.getElementById("todos");
+
+      parent.appendChild(createChild(title, description, globalId++));//an id is given to every todo so that whenver a mark as done button is clicked we know which one to change to done
+    }
+  </script>
+</head>
+
+<body>
+  <input type="text" id="title" placeholder="Todo title"></input> <br /><br />
+  <input type="text" id="description" placeholder="Todo description"></input> <br /><br />
+  <button onclick="addTodo()">Add todo</button>
+
+  <div id="todos">
+
+  </div>
+</body>
+
+</html>
